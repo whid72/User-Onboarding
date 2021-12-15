@@ -1,10 +1,15 @@
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
-    name: yup
+    fname: yup
         .string()
         .trim()
-        .required('Name is required')
+        .required('First name is required')
+        .min(3, 'Name must be 3 characters long'),
+    lname: yup
+        .string()
+        .trim()
+        .required('First name is required')
         .min(3, 'Name must be 3 characters long'),
     email: yup
         .string()

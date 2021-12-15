@@ -18,6 +18,7 @@ export default function Form(props){
     const onChange = evt => {
         /* 🔥 FIX THIS SO IT ALSO WORKS WITH CHECKBOXES */
         const { name, value, checked, type } = evt.target
+        console.log(evt.target)
         const realValue = type === 'checkbox' ? checked : value;
         change(name, realValue)
       }
@@ -25,7 +26,8 @@ export default function Form(props){
     return (
         <form onSubmit={onSubmit}>
         <div className='errors'>
-          <div>{errors.name}</div>
+          <div>{errors.fname}</div>
+          <div>{errors.lname}</div>
           <div>{errors.email}</div>
           <div>{errors.password}</div>
         </div>
@@ -34,7 +36,7 @@ export default function Form(props){
             <input 
             onChange={onChange} 
             type='text' 
-            name='name' 
+            name='fname' 
             placeholder='Enter Your Name'
             value={values.fname} />
         </label><br/>
@@ -43,7 +45,7 @@ export default function Form(props){
             <input 
             onChange={onChange} 
             type='text' 
-            name='name' 
+            name='lname' 
             placeholder='Enter Your Name'
             value={values.lname} />
         </label><br/>

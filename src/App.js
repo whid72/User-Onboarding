@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import User from './User';
 import Form from './Form';
 import schema from './validation/schema';
 import * as yup from 'yup';
@@ -32,7 +33,7 @@ const initialData = [];
 const initialDisabled = true
 
 function App() {
-  const [data, setData] = useState(initialData) 
+  const [data, setData] = useState(initialData)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
@@ -61,7 +62,6 @@ function App() {
     axios.post('https://reqres.in/api/users', newData)
       .then(res => {
         setData([res.data, ...data]);
-        console.log(res.data);
       })
       .catch(err => console.error(err))
       .finally(() => {
@@ -82,14 +82,26 @@ function App() {
 
   return (
     <div className="App">
-      <Form 
-      values={formValues} 
-      disabled={disabled} 
-      errors={formErrors}
-      change={inputChange}
-      submit={formSubmit}
-       />
+      <Form
+        values={formValues}
+        disabled={disabled}
+        errors={formErrors}
+        change={inputChange}
+        submit={formSubmit}
+      />
+
+      {
+        data.map(user => {
+          return (
+            <User key={user.id} details={user} />
+          )
+        })
+      }
+
     </div>
+
+
+
   );
 }
 
