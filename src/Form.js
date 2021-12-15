@@ -1,28 +1,72 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import * as yup from 'yup';
-import { Link } from 'react-router-dom';
 
-export default function Form(){
+
+export default function Form(props){
+
+    const {
+        values,
+        submit,
+        change,
+        disabled,
+        errors,
+      } = props
+
+    const onSubmit = evt => {
+        evt.preventDefault()
+        submit()
+      }
+
+    const onChange = evt => {
+        /* 🔥 FIX THIS SO IT ALSO WORKS WITH CHECKBOXES */
+        const { name, value, checked, type } = evt.target
+        const realValue = type === 'checkbox' ? checked : value;
+        change(name, realValue)
+      }
+
     return (
-        <form>
+        <form onSubmit={onSubmit}>
+        <div className='errors'>
+          <div>{errors.name}</div>
+          <div>{errors.email}</div>
+          <div>{errors.password}</div>
+        </div>
         <label>
         Name:
-            <input type='text' name='name' placeholder='Enter Your Name' />
+            <input 
+            onChange={onChange} 
+            type='text' 
+            name='name' 
+            placeholder='Enter Your Name'
+            value={values.name} />
         </label><br/>
         <label>
         Email: 
-            <input type='email' name='email' placeholder='Enter Your Email' />
+            <input 
+            onChange={onChange} 
+            type='email' 
+            name='email' 
+            placeholder='Enter Your Email'
+            value={values.email} />
         </label><br/>
         <label>
         Password: 
-            <input type='password' name='password' placeholder='Enter Your Password' />
+            <input 
+            onChange={onChange} 
+            type='password' 
+            name='password' 
+            placeholder='Enter Your Password'
+            value={values.password} />
         </label><br/>
         <label>
             Terms of Service
-            <input type='checkbox' name='terms' />
+            <input 
+            onChange={onChange} 
+            type='checkbox' 
+            name='terms'
+            value={values.terms} />
         </label><br/>
-        <button type='submit'>Submit Info</button>
+        <button disabled={disabled}>Submit Info</button>
         </form>
     )
 }
