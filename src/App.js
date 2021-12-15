@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import Form from './Form';
 import schema from './validation/schema';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const initialFormValues = {
   ///// TEXT INPUTS /////
-  name: '',
+  fname: '',
+  lname: '',
   email: '',
   password: '',
   ///// DROPDOWN /////
@@ -18,17 +20,19 @@ const initialFormValues = {
 }
 
 const initialFormErrors = {
-  name: '',
+  fname: '',
+  lname: '',
   email: '',
   password: '',
   // role: '',
   // civil: '',
 }
 
+const initialData = [];
 const initialDisabled = true
 
 function App() {
-
+  const [data, setData] = useState(initialData) 
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
@@ -53,6 +57,29 @@ function App() {
     })
   }
 
+  const postNewData = newData => {
+    axios.post('https://reqres.in/api/users', newData)
+      .then(res => {
+        setData([res.data, ...data]);
+        console.log(res.data);
+      })
+      .catch(err => console.error(err))
+      .finally(() => {
+        setFormValues(initialFormValues);
+      })
+  }
+
+  const formSubmit = () => {
+    const newData = {
+      fname: formValues.fname.trim(),
+      lname: formValues.lname.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim(),
+      tos: ['terms'].filter(term => !!formValues[term])
+    }
+    postNewData(newData);
+  }
+
   return (
     <div className="App">
       <Form 
@@ -60,7 +87,7 @@ function App() {
       disabled={disabled} 
       errors={formErrors}
       change={inputChange}
-      
+      submit={formSubmit}
        />
     </div>
   );

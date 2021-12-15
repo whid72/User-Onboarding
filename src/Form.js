@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-
+import React from 'react'
 
 export default function Form(props){
 
@@ -32,13 +30,22 @@ export default function Form(props){
           <div>{errors.password}</div>
         </div>
         <label>
-        Name:
+        First Name:
             <input 
             onChange={onChange} 
             type='text' 
             name='name' 
             placeholder='Enter Your Name'
-            value={values.name} />
+            value={values.fname} />
+        </label><br/>
+        <label>
+        Last Name:
+            <input 
+            onChange={onChange} 
+            type='text' 
+            name='name' 
+            placeholder='Enter Your Name'
+            value={values.lname} />
         </label><br/>
         <label>
         Email: 
