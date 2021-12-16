@@ -84,5 +84,11 @@ describe('Tests', () => {
             password().type('Password');
             submitBtn().click();
         })
+
+        it('Can detect when an input is left empty', () => {
+            fname().type('Darrion');
+            lname().type('White');
+            submitBtn().should('be.disabled');
+        })
     })
 })
