@@ -75,7 +75,7 @@ export default function Form(props){
             name='terms'
             value={values.terms} />
         </label><br/>
-        <button disabled={disabled}>Submit Info</button>
+        <button id="submitBtn" disabled={disabled}>Submit Info</button>
         </form>
     )
 }
